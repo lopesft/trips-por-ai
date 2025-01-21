@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Configuração do banco de dados usando variável de ambiente
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://auto-trips-db_owner:npg_ZayKXMBOU49Y@ep-noisy-cake-a8yal9qu.eastus2.azure.neon.tech/auto-trips-db?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -106,7 +106,7 @@ def deletar_viagem(id):
     return jsonify({"mensagem": "Viagem deletada com sucesso!"}), 200
 
 # Adicione um handler para inicializar o banco de dados no Vercel
-@app.before_first_request
+@app.before_request
 def setup_db():
     db.create_all()
 
